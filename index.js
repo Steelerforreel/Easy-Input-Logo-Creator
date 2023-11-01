@@ -1,7 +1,8 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
-const { createLogo } = require("./lib/createLogo");
-const { createShape } = require("./lib/createShape");
+const Circle = require('./lib/circle')
+const Triangle = require ('./lib/triangle')
+const Square = require ('./lib/square')
 
 inquirer
   .prompt([
@@ -13,26 +14,43 @@ inquirer
     {
       type: "input",
       name: "textColor",
-      message: `Enter a color keyword or a hexadecimal number`,
+      message: `Enter a color for the text using a keyword or a hexadecimal number`,
     },
     {
       type: "list",
       name: "shape",
       message: `Please choose logo shape`,
       choices: ["Circle", "Triangle", "Square"],
-      },
+    },
     {
       type: "input",
       name: "shapeColor",
-      message: `Enter a color keyword or a hexadecimal number`,
+      message: `Enter a color for the background of your logo using a keyword or a hexadecimal number`,
     },
-    
-])
+
+  ])
   .then((data) => {
     const path = "./output/Logo.svg";
-    const logo = createShape(data);
+    let userChoiceShape;
+    switch (data.shape) {
+      case "Circle":
+        userChoiceShape = new Circle(data.text, data.textColor, data.shapeColor);
 
-    fs.writeFile(path, createLogo(logo), (err) =>
+        break;
+
+      case "Triangle":
+        userChoiceShape = new Triangle(data.text, data.textColor, data.shapeColor);
+        
+        break;
+
+      case "Square":
+
+        userChoiceShape = new Square(data.text, data.textColor, data.shapeColor);
+
+        break;
+    }
+
+    fs.writeFile(path, userChoiceShape.render(), (err) =>
       err ? console.error(err) : console.log("Your Logo.svg has been created!")
     );
   })
