@@ -7,7 +7,7 @@ inquirer
   .prompt([
     {
       type: "input",
-      name: "Name",
+      name: "text",
       message: "Enter a name that has at least 1-3 characters.",
     },
     {
@@ -17,7 +17,7 @@ inquirer
     },
     {
       type: "list",
-      name: "logoShape",
+      name: "shape",
       message: `Please choose logo shape`,
       choices: ["Circle", "Triangle", "Square"],
       },
